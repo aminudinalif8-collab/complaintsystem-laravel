@@ -602,7 +602,7 @@
                 <div class="stat-number">{{ $total ?? 0 }}</div>
             </div>
             <div class="stat-card">
-                <h3><i class="fas fa-clock"></i> Pending</h3>
+                <h3><i class="fas fa-clock"></i> Pendings</h3>
                 <div class="stat-number">{{ $pending ?? 0 }}</div>
             </div>
             <div class="stat-card">
