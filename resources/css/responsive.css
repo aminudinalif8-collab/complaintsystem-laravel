@@ -1,0 +1,684 @@
+/* ========================================
+   RESPONSIVE DESIGN UTILITIES & PATTERNS
+   ======================================== */
+
+/* Root CSS Variables for Responsive Design */
+:root {
+    /* Breakpoints */
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-2xl: 1400px;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 32px;
+    --spacing-4xl: 40px;
+
+    /* Font Sizes - Mobile First */
+    --font-xs: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-base: 1rem;
+    --font-lg: 1.125rem;
+    --font-xl: 1.25rem;
+    --font-2xl: 1.5rem;
+    --font-3xl: 1.875rem;
+    --font-4xl: 2.25rem;
+}
+
+/* ============================================
+   MOBILE FIRST - BASE (Mobile/XS)
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive Images */
+.img-responsive,
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   FLEX & GRID RESPONSIVE UTILITIES
+   ============================================ */
+
+.flex-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+}
+
+.grid-responsive {
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--spacing-lg);
+}
+
+.container-responsive {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* ============================================
+   SIDEBAR RESPONSIVE STYLES
+   ============================================ */
+
+.sidebar-responsive {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    z-index: 999;
+    transition: left 0.3s ease;
+}
+
+.sidebar-responsive.open {
+    left: 0;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+.sidebar-overlay.open {
+    display: block;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-md);
+}
+
+.mobile-menu-toggle.visible {
+    display: block;
+}
+
+/* ============================================
+   NAVIGATION RESPONSIVE
+   ============================================ */
+
+.nav-responsive,
+nav.responsive-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-responsive .nav-menu,
+nav.responsive-nav .nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+/* ============================================
+   FORM RESPONSIVE
+   ============================================ */
+
+.form-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.form-row {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    font-size: var(--font-base);
+    font-family: inherit;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #2c6e5c;
+    box-shadow: 0 0 0 3px rgba(44, 110, 92, 0.1);
+}
+
+/* ============================================
+   TABLE RESPONSIVE
+   ============================================ */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: var(--font-sm);
+}
+
+/* ============================================
+   CARD/GRID RESPONSIVE
+   ============================================ */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+.card {
+    padding: var(--spacing-2xl);
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+/* ============================================
+   MODAL RESPONSIVE
+   ============================================ */
+
+.modal-responsive {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-responsive.show {
+    display: flex;
+}
+
+.modal-content-responsive {
+    background: white;
+    border-radius: 12px;
+    padding: var(--spacing-2xl);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* ============================================
+   BUTTON RESPONSIVE
+   ============================================ */
+
+.btn-responsive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: var(--font-sm);
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: var(--spacing-sm);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* ============================================
+   TEXT UTILITIES RESPONSIVE
+   ============================================ */
+
+.text-center-mobile {
+    text-align: center;
+}
+
+.hide-mobile {
+    display: none;
+}
+
+.show-mobile {
+    display: block;
+}
+
+/* ============================================
+   PADDING & MARGIN RESPONSIVE (Mobile)
+   ============================================ */
+
+.p-responsive-mobile { padding: var(--spacing-lg); }
+.pt-responsive-mobile { padding-top: var(--spacing-lg); }
+.pb-responsive-mobile { padding-bottom: var(--spacing-lg); }
+.px-responsive-mobile { padding-left: var(--spacing-lg); padding-right: var(--spacing-lg); }
+.py-responsive-mobile { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-lg); }
+
+.m-responsive-mobile { margin: var(--spacing-lg); }
+.mt-responsive-mobile { margin-top: var(--spacing-lg); }
+.mb-responsive-mobile { margin-bottom: var(--spacing-lg); }
+.mx-responsive-mobile { margin-left: var(--spacing-lg); margin-right: var(--spacing-lg); }
+.my-responsive-mobile { margin-top: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
+
+/* ============================================
+   TABLET (480px and above)
+   ============================================ */
+
+@media (min-width: 480px) {
+    :root {
+        --font-base: 1rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .hide-sm {
+        display: none;
+    }
+
+    .show-sm {
+        display: block;
+    }
+
+    .p-responsive-tablet { padding: var(--spacing-2xl); }
+    .pt-responsive-tablet { padding-top: var(--spacing-2xl); }
+    .pb-responsive-tablet { padding-bottom: var(--spacing-2xl); }
+    .px-responsive-tablet { padding-left: var(--spacing-2xl); padding-right: var(--spacing-2xl); }
+    .py-responsive-tablet { padding-top: var(--spacing-2xl); padding-bottom: var(--spacing-2xl); }
+
+    .m-responsive-tablet { margin: var(--spacing-2xl); }
+    .mt-responsive-tablet { margin-top: var(--spacing-2xl); }
+    .mb-responsive-tablet { margin-bottom: var(--spacing-2xl); }
+    .mx-responsive-tablet { margin-left: var(--spacing-2xl); margin-right: var(--spacing-2xl); }
+    .my-responsive-tablet { margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); }
+}
+
+/* ============================================
+   TABLET/MEDIUM (768px and above)
+   ============================================ */
+
+@media (min-width: 768px) {
+    :root {
+        --font-base: 1rem;
+    }
+
+    body {
+        font-size: var(--font-base);
+    }
+
+    .container-responsive {
+        padding: 0 var(--spacing-2xl);
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-2xl);
+    }
+
+    .form-row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-2xl);
+    }
+
+    .form-row.cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .table-responsive {
+        overflow-x: visible;
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: var(--spacing-lg);
+        font-size: var(--font-base);
+    }
+
+    .sidebar-responsive {
+        position: relative;
+        left: auto;
+        width: 280px;
+        height: auto;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+
+    .nav-responsive .nav-menu,
+    nav.responsive-nav .nav-menu {
+        flex-direction: row;
+        gap: var(--spacing-lg);
+    }
+
+    .hide-md {
+        display: none;
+    }
+
+    .show-md {
+        display: block;
+    }
+
+    .p-responsive-tablet { padding: var(--spacing-3xl); }
+    .pt-responsive-tablet { padding-top: var(--spacing-3xl); }
+    .pb-responsive-tablet { padding-bottom: var(--spacing-3xl); }
+    .px-responsive-tablet { padding-left: var(--spacing-3xl); padding-right: var(--spacing-3xl); }
+    .py-responsive-tablet { padding-top: var(--spacing-3xl); padding-bottom: var(--spacing-3xl); }
+
+    .m-responsive-tablet { margin: var(--spacing-3xl); }
+    .mt-responsive-tablet { margin-top: var(--spacing-3xl); }
+    .mb-responsive-tablet { margin-bottom: var(--spacing-3xl); }
+    .mx-responsive-tablet { margin-left: var(--spacing-3xl); margin-right: var(--spacing-3xl); }
+    .my-responsive-tablet { margin-top: var(--spacing-3xl); margin-bottom: var(--spacing-3xl); }
+}
+
+/* ============================================
+   DESKTOP (992px and above)
+   ============================================ */
+
+@media (min-width: 992px) {
+    .cards-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .form-row {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-2xl);
+    }
+
+    .form-row.cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row.cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .hide-lg {
+        display: none;
+    }
+
+    .show-lg {
+        display: block;
+    }
+
+    .p-responsive-desktop { padding: var(--spacing-4xl); }
+    .pt-responsive-desktop { padding-top: var(--spacing-4xl); }
+    .pb-responsive-desktop { padding-bottom: var(--spacing-4xl); }
+    .px-responsive-desktop { padding-left: var(--spacing-4xl); padding-right: var(--spacing-4xl); }
+    .py-responsive-desktop { padding-top: var(--spacing-4xl); padding-bottom: var(--spacing-4xl); }
+
+    .m-responsive-desktop { margin: var(--spacing-4xl); }
+    .mt-responsive-desktop { margin-top: var(--spacing-4xl); }
+    .mb-responsive-desktop { margin-bottom: var(--spacing-4xl); }
+    .mx-responsive-desktop { margin-left: var(--spacing-4xl); margin-right: var(--spacing-4xl); }
+    .my-responsive-desktop { margin-top: var(--spacing-4xl); margin-bottom: var(--spacing-4xl); }
+}
+
+/* ============================================
+   LARGE DESKTOP (1200px and above)
+   ============================================ */
+
+@media (min-width: 1200px) {
+    .container-responsive {
+        max-width: 1140px;
+        padding: 0 var(--spacing-2xl);
+    }
+}
+
+/* ============================================
+   VERY LARGE DESKTOP (1400px and above)
+   ============================================ */
+
+@media (min-width: 1400px) {
+    .container-responsive {
+        max-width: 1320px;
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* ============================================
+   EXTRA SMALL (< 480px) SPECIFIC
+   ============================================ */
+
+@media (max-width: 479px) {
+    body {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .container-responsive {
+        padding: 0 var(--spacing-md);
+    }
+
+    h1 { font-size: var(--font-2xl); }
+    h2 { font-size: var(--font-xl); }
+    h3 { font-size: var(--font-lg); }
+    h4, h5, h6 { font-size: var(--font-base); }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .form-control {
+        padding: var(--spacing-md);
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .table-responsive {
+        font-size: var(--font-xs);
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: var(--spacing-sm);
+    }
+
+    .btn-responsive {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: var(--font-sm);
+        width: 100%;
+    }
+
+    .modal-content-responsive {
+        padding: var(--spacing-lg);
+        max-width: 95%;
+    }
+
+    .card {
+        padding: var(--spacing-lg);
+    }
+
+    .flex-responsive {
+        gap: var(--spacing-md);
+    }
+
+    .grid-responsive {
+        gap: var(--spacing-md);
+    }
+}
+
+/* ============================================
+   SMALL TABLETS (480px - 767px)
+   ============================================ */
+
+@media (min-width: 480px) and (max-width: 767px) {
+    h1 { font-size: var(--font-2xl); }
+    h2 { font-size: var(--font-xl); }
+    h3 { font-size: var(--font-lg); }
+
+    .table-responsive {
+        font-size: var(--font-sm);
+    }
+
+    .cards-grid {
+        gap: var(--spacing-lg);
+    }
+
+    .form-row {
+        gap: var(--spacing-lg);
+    }
+
+    .btn-responsive {
+        padding: var(--spacing-md) var(--spacing-2xl);
+    }
+}
+
+/* ============================================
+   TABLETS & SMALL DESKTOPS (768px - 991px)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 { font-size: var(--font-3xl); }
+    h2 { font-size: var(--font-2xl); }
+    h3 { font-size: var(--font-xl); }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .hide-print {
+        display: none !important;
+    }
+
+    .show-print {
+        display: block !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+
+    body {
+        background: #1a1a1a;
+        color: #e0e0e0;
+    }
+
+    .card {
+        background: #2a2a2a;
+        border-color: #444;
+    }
+
+    .form-control {
+        background: #2a2a2a;
+        color: #e0e0e0;
+        border-color: #444;
+    }
+}

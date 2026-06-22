@@ -1,0 +1,93 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// ========================================
+// RESPONSIVE BREAKPOINTS
+// ========================================
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 480px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1400px;
+
+// Responsive Mixins
+@mixin respond-to-sm {
+    @media (min-width: #{$breakpoint-sm}) {
+        @content;
+    }
+}
+
+@mixin respond-to-md {
+    @media (min-width: #{$breakpoint-md}) {
+        @content;
+    }
+}
+
+@mixin respond-to-lg {
+    @media (min-width: #{$breakpoint-lg}) {
+        @content;
+    }
+}
+
+@mixin respond-to-xl {
+    @media (min-width: #{$breakpoint-xl}) {
+        @content;
+    }
+}
+
+@mixin respond-to-2xl {
+    @media (min-width: #{$breakpoint-2xl}) {
+        @content;
+    }
+}
+
+@mixin respond-below-md {
+    @media (max-width: #{$breakpoint-md - 1}) {
+        @content;
+    }
+}
+
+@mixin respond-below-lg {
+    @media (max-width: #{$breakpoint-lg - 1}) {
+        @content;
+    }
+}
+
+@mixin respond-between-sm-md {
+    @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1}) {
+        @content;
+    }
+}
+
+// ========================================
+// RESPONSIVE SPACING
+// ========================================
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 20px;
+$spacing-2xl: 24px;
+$spacing-3xl: 32px;
+$spacing-4xl: 40px;
+
+// ========================================
+// RESPONSIVE FONT SIZES
+// ========================================
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 1.875rem;
+$font-size-4xl: 2.25rem;
