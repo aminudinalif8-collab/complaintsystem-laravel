@@ -470,7 +470,7 @@
                             <th>Category</th>
                             <th>Date</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
