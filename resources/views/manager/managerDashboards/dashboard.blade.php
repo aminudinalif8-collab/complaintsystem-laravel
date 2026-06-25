@@ -94,7 +94,7 @@
 
     /* Main content */
     .main-content {
-        padding: 28px 36px;
+        padding: 28px 36px 28px 28px;
         overflow-x: auto;
         min-height: 100vh;
     }
