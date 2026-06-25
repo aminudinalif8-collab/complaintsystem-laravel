@@ -93,10 +93,12 @@
     }
 
     /* Main content */
+    /* Dalam fail layout utama */
     .main-content {
-        padding: 28px 36px 28px 28px;
+        flex: 1;
+        /* ✅ Tukar kepada ini supaya kiri dan kanan ada gap yang cantik */
+        padding: 28px 36px; 
         overflow-x: auto;
-        min-height: 100vh;
     }
 
     .header-row {
@@ -433,143 +435,139 @@
     }
 </style>
 
-<div class="app-wrapper">
-    <div class="main-content">
-        <div class="header-row">
-            <div class="title-section">
-                <h1><i class="fas fa-chart-line"></i> Manager Dashboard</h1>
-                <p>Oversee complaints, approve actions, manage team, and generate reports</p>
+<div class="header-row">
+    <div class="title-section">
+        <h1><i class="fas fa-chart-line"></i> Manager Dashboard</h1>
+        <p>Oversee complaints, approve actions, manage team, and generate reports</p>
+    </div>
+    <a href="{{ route('manager.profile') }}" class="profile-card">
+        <div class="avatar">
+            @if(Auth::user()->employeePicture)
+                <img src="{{ asset('uploads/' . Auth::user()->employeePicture) }}" alt="Avatar">
+            @else
+                {{ strtoupper(substr(Auth::user()->employeeName, 0, 2)) }}
+            @endif
+        </div>
+        <div class="profile-info">
+            <h4>{{ Auth::user()->employeeName }}</h4>
+            <div class="meta-info">
+                <span class="dept">{{ Auth::user()->department?->departmentName ?? 'N/A' }} Dept</span>
+                <span class="dot">•</span>
+                <span class="email">{{ Auth::user()->employeeEmail }}</span>
             </div>
-            <a href="{{ route('manager.profile') }}" class="profile-card">
-                <div class="avatar">
-                    @if(Auth::user()->employeePicture)
-                        <img src="{{ asset('uploads/' . Auth::user()->employeePicture) }}" alt="Avatar">
-                    @else
-                        {{ strtoupper(substr(Auth::user()->employeeName, 0, 2)) }}
-                    @endif
-                </div>
-                <div class="profile-info">
-                    <h4>{{ Auth::user()->employeeName }}</h4>
-                    <div class="meta-info">
-                        <span class="dept">{{ Auth::user()->department?->departmentName ?? 'N/A' }} Dept</span>
-                        <span class="dot">•</span>
-                        <span class="email">{{ Auth::user()->employeeEmail }}</span>
-                    </div>
-                </div>
-            </a>
+        </div>
+    </a>
+</div>
+
+<!-- DASHBOARD SECTION -->
+<div id="dashboardSection">
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3><i class="fas fa-folder-open"></i> Total Complaints</h3>
+            <div class="stat-number">{{ $totalComplaints }}</div>
+        </div>
+        <div class="stat-card">
+            <h3><i class="fas fa-clock"></i> Pending</h3>
+            <div class="stat-number">{{ $pendingComplaints }}</div>
+        </div>
+        <div class="stat-card">
+            <h3><i class="fas fa-sync-alt"></i> In Progress</h3>
+            <div class="stat-number">{{ $inProgressComplaints }}</div>
+        </div>
+        <div class="stat-card">
+            <h3><i class="fas fa-check-circle"></i> Resolved</h3>
+            <div class="stat-number">{{ $resolvedComplaints }}</div>
+        </div>
+        <div class="stat-card">
+            <h3><i class="fas fa-users"></i> Total Employees</h3>
+            <div class="stat-number">{{ $totalEmployees }}</div>
+        </div>
+    </div>
+
+    <!-- Recent Complaints Table -->
+    <div class="table-wrapper">
+        <div class="section-title">
+            <i class="fas fa-clock"></i> Recent Complaints
+        </div>
+        <table class="complaint-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Assigned Supervisor</th>
+                    <th>Action Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($complaints as $complaint)
+                    <tr>
+                        <td>C{{ str_pad($complaint->complaintID, 3, '0', STR_PAD_LEFT) }}</td>
+                        <td>{{ $complaint->employee->employeeName ?? 'N/A' }}</td>
+                        <td>{{ $complaint->complaintTitle }}</td>
+                        <td>
+                            @php
+                                $status = $complaint->complaintStatus;
+                                $class = match($status) {
+                                    'Pending' => 'status-pending',
+                                    'In Progress' => 'status-progress',
+                                    'Pending Approval' => 'status-pending-approval',
+                                    'Resolved' => 'status-resolved',
+                                    'Rejected' => 'status-rejected',
+                                    'Cancelled' => 'status-cancelled',
+                                    default => 'status-pending'
+                                };
+                            @endphp
+                            <span class="status-badge {{ $class }}">{{ $status }}</span>
+                        </td>
+                        <td>
+                            @if($complaint->actions->isNotEmpty() && $complaint->actions->first()->supervisor)
+                                {{ $complaint->actions->first()->supervisor->employeeName }}
+                            @else
+                                Not Assigned
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('manager.complaintDetails', ['id' => $complaint->complaintID]) }}" class="btn-sm" style="text-decoration: none;">
+                                View Details
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-grid">
+        <!-- Chart 1: Complaints by Status (Horizontal Bar Chart) -->
+        <div class="chart-card">
+            <div class="section-title">
+                <i class="fas fa-chart-bar" style="color: var(--primary);"></i> Complaints by Status
+            </div>
+            <div class="chart-container">
+                <canvas id="complaintChart"></canvas>
+            </div>
+            <div class="chart-legend-custom">
+                <span><span class="color-dot" style="background: #F59E0B;"></span> Pending</span>
+                <span><span class="color-dot" style="background: #3B82F6;"></span> In Progress</span>
+                <span><span class="color-dot" style="background: #10B981;"></span> Resolved</span>
+                <span><span class="color-dot" style="background: #efec44;"></span> Awaiting Approval</span>
+            </div>
         </div>
 
-        <!-- DASHBOARD SECTION -->
-        <div id="dashboardSection">
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3><i class="fas fa-folder-open"></i> Total Complaints</h3>
-                    <div class="stat-number">{{ $totalComplaints }}</div>
-                </div>
-                <div class="stat-card">
-                    <h3><i class="fas fa-clock"></i> Pending</h3>
-                    <div class="stat-number">{{ $pendingComplaints }}</div>
-                </div>
-                <div class="stat-card">
-                    <h3><i class="fas fa-sync-alt"></i> In Progress</h3>
-                    <div class="stat-number">{{ $inProgressComplaints }}</div>
-                </div>
-                <div class="stat-card">
-                    <h3><i class="fas fa-check-circle"></i> Resolved</h3>
-                    <div class="stat-number">{{ $resolvedComplaints }}</div>
-                </div>
-                <div class="stat-card">
-                    <h3><i class="fas fa-users"></i> Total Employees</h3>
-                    <div class="stat-number">{{ $totalEmployees }}</div>
-                </div>
+        <!-- Chart 2: Employee Distribution (Bar Chart) -->
+        <div class="chart-card">
+            <div class="section-title">
+                <i class="fas fa-users" style="color: var(--primary);"></i> Employee Distribution by Department
             </div>
-
-            <!-- Recent Complaints Table -->
-            <div class="table-wrapper">
-                <div class="section-title">
-                    <i class="fas fa-clock"></i> Recent Complaints
-                </div>
-                <table class="complaint-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Employee</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Assigned Supervisor</th>
-                            <th>Action Required</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($complaints as $complaint)
-                            <tr>
-                                <td>C{{ str_pad($complaint->complaintID, 3, '0', STR_PAD_LEFT) }}</td>
-                                <td>{{ $complaint->employee->employeeName ?? 'N/A' }}</td>
-                                <td>{{ $complaint->complaintTitle }}</td>
-                                <td>
-                                    @php
-                                        $status = $complaint->complaintStatus;
-                                        $class = match($status) {
-                                            'Pending' => 'status-pending',
-                                            'In Progress' => 'status-progress',
-                                            'Pending Approval' => 'status-pending-approval',
-                                            'Resolved' => 'status-resolved',
-                                            'Rejected' => 'status-rejected',
-                                            'Cancelled' => 'status-cancelled',
-                                            default => 'status-pending'
-                                        };
-                                    @endphp
-                                    <span class="status-badge {{ $class }}">{{ $status }}</span>
-                                </td>
-                                <td>
-                                    @if($complaint->actions->isNotEmpty() && $complaint->actions->first()->supervisor)
-                                        {{ $complaint->actions->first()->supervisor->employeeName }}
-                                    @else
-                                        Not Assigned
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('manager.complaintDetails', ['id' => $complaint->complaintID]) }}" class="btn-sm" style="text-decoration: none;">
-                                        View Details
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="chart-container">
+                <canvas id="employeeChart"></canvas>
             </div>
-
-            <!-- Charts Section -->
-            <div class="chart-grid">
-                <!-- Chart 1: Complaints by Status (Horizontal Bar Chart) -->
-                <div class="chart-card">
-                    <div class="section-title">
-                        <i class="fas fa-chart-bar" style="color: var(--primary);"></i> Complaints by Status
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="complaintChart"></canvas>
-                    </div>
-                    <div class="chart-legend-custom">
-                        <span><span class="color-dot" style="background: #F59E0B;"></span> Pending</span>
-                        <span><span class="color-dot" style="background: #3B82F6;"></span> In Progress</span>
-                        <span><span class="color-dot" style="background: #10B981;"></span> Resolved</span>
-                        <span><span class="color-dot" style="background: #efec44;"></span> Awaiting Approval</span>
-                    </div>
-                </div>
-
-                <!-- Chart 2: Employee Distribution (Bar Chart) -->
-                <div class="chart-card">
-                    <div class="section-title">
-                        <i class="fas fa-users" style="color: var(--primary);"></i> Employee Distribution by Department
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="employeeChart"></canvas>
-                    </div>
-                    <div class="chart-legend-custom">
-                        <span><span class="color-dot" style="background: #2C6E5C;"></span> Total Employees</span>
-                    </div>
-                </div>
+            <div class="chart-legend-custom">
+                <span><span class="color-dot" style="background: #2C6E5C;"></span> Total Employees</span>
             </div>
         </div>
     </div>

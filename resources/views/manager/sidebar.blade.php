@@ -171,7 +171,7 @@
         /* Main content */
         .main-content {
             flex: 1;
-            padding: 24px 32px;
+            padding: 24px 32px 24px 0;
             overflow-x: auto;
         }
 
