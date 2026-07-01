@@ -60,7 +60,7 @@ class ClerkSubmitComplaintController extends Controller
             'complaintTitle' => 'required',
             'complaintDescription' => 'required',
             'complaintCategory' => 'required',
-            'complaintEvidence' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120'
+            'complaintEvidence' => 'nullable|image|mimes:jpg,jpeg,png|max:5120'
         ]);
 
         $priorityService = new PriorityService();

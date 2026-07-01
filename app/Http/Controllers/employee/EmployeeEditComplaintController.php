@@ -118,7 +118,7 @@ class EmployeeEditComplaintController extends Controller
             'complaintTitle' => 'required|string|max:255',
             'complaintDescription' => 'required|string',
             'complaintCategory' => 'required|string',
-            'complaintEvidence' => 'nullable|file|mimes:jpg,jpeg,png,pdf,txt|max:5120'
+            'complaintEvidence' => 'nullable|image|mimes:jpg,jpeg,png|max:5120'
         ]);
 
         // 3. Update basic fields

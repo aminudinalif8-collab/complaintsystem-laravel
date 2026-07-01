@@ -1009,9 +1009,9 @@
                                     <span class="upload-text">
                                         <strong>Click to upload</strong> or drag and drop
                                     </span>
-                                    <span class="upload-hint">JPG, PNG, PDF, TXT (Max 5MB)</span>
+                                    <span class="upload-hint">JPG or PNG image only (Max 5MB)</span>
                                 </div>
-                                <input type="file" name="complaintEvidence" id="fileInput" class="file-input" accept="image/*,.pdf,.txt">
+                                <input type="file" name="complaintEvidence" id="fileInput" class="file-input" accept="image/jpeg,image/png,.jpg,.jpeg,.png">
 
                                 <!-- File Preview (appears after selection) -->
                                 <div class="file-preview" id="filePreview">
@@ -1121,6 +1121,20 @@
         }
 
         function handleFilePreview(file) {
+            const allowedImageTypes = ['image/jpeg', 'image/png'];
+            if (!allowedImageTypes.includes(file.type)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File Type',
+                    text: 'Only JPG and PNG image files are allowed.',
+                    confirmButtonColor: '#2C6E5C',
+                    borderRadius: '16px'
+                });
+                fileInput.value = '';
+                resetFilePreview();
+                return;
+            }
+
             const maxSize = 5 * 1024 * 1024; // 5MB
             if (file.size > maxSize) {
                 Swal.fire({
@@ -1157,7 +1171,7 @@
             if (uploadContent) {
                 uploadContent.style.display = 'flex';
             }
-            fileName.textContent = 'document.pdf';
+            fileName.textContent = 'image.jpg';
             fileSize.textContent = '(0 KB)';
         }
 

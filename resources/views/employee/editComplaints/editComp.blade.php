@@ -710,8 +710,8 @@
                                     </svg>
                                     Replace or Add Attachment
                                 </label>
-                                <input type="file" name="complaintEvidence" id="fileInput" class="file-input" accept="image/*,.pdf,.txt">
-                                <div class="helper-text">Supported formats: JPG, PNG, PDF, TXT (Max 5MB)</div>
+                                <input type="file" name="complaintEvidence" id="fileInput" class="file-input" accept="image/jpeg,image/png,.jpg,.jpeg,.png">
+                                <div class="helper-text">Supported formats: JPG or PNG image only (Max 5MB)</div>
                             </div>
                         @endif
                     </div>
@@ -834,6 +834,19 @@
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
+
+            const allowedImageTypes = ['image/jpeg', 'image/png'];
+            if (!allowedImageTypes.includes(file.type)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File Type',
+                    text: 'Only JPG and PNG image files are allowed.',
+                    confirmButtonColor: '#2C6E5C',
+                    borderRadius: '16px'
+                });
+                fileInput.value = '';
+                return;
+            }
 
             const maxSize = 5 * 1024 * 1024;
             if (file.size > maxSize) {

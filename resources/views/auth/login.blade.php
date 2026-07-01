@@ -90,10 +90,27 @@
             z-index: 1;
         }
 
-        .login-left .brand img {
-            max-width: 180px;
-            margin-bottom: 24px;
-            filter: brightness(0) invert(1);
+        .login-left .brand-mark {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 18px;
+        }
+
+        .login-left .brand-name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            opacity: 0.92;
         }
 
         .login-left .brand h1 {
@@ -403,8 +420,10 @@
                 padding: 32px 28px;
             }
 
-            .login-left .brand img {
-                max-width: 140px;
+            .login-left .brand-mark {
+                width: 62px;
+                height: 62px;
+                margin-bottom: 16px;
             }
         }
 
@@ -602,7 +621,8 @@
     <!-- ===== LEFT PANEL ===== -->
     <div class="login-left">
         <div class="brand">
-            <img src="{{ asset('uploads/merchant9-logo.png') }}" alt="Merchant9 Logo">
+            <div class="brand-mark" aria-hidden="true"><i class="fas fa-ticket-alt"></i></div>
+            <div class="brand-name">Complaint System</div>
             <h1>Welcome Back</h1>
             <p>Sign in to access the Complaint Management System and manage your tickets efficiently.</p>
         </div>
@@ -681,7 +701,7 @@
         </div> -->
 
         <div class="login-footer">
-            <i class="fas fa-shield-alt"></i> Secure employee portal &bull; Merchant9 CMS
+            <i class="fas fa-shield-alt"></i> Secure employee portal &bull; Complaint System CMS
         </div>
     </div>
 </div>

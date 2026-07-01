@@ -928,7 +928,7 @@
     <!-- SIDEBAR -->
     <div class="sidebar" id="employeeSidebar">
         <div class="sidebar-header">
-            <h2><i class="fas fa-ticket-alt"></i> <span>Merchant9</span></h2>
+            <h2><i class="fas fa-ticket-alt"></i> <span>Complaint System</span></h2>
             <p><span>Complaint Portal</span></p>
             <button class="sidebar-close" type="button" data-sidebar-close aria-label="Close navigation">
                 <i class="fas fa-times"></i>

@@ -61,7 +61,7 @@ class EmployeeSubmitComplaintController extends Controller
             'complaintTitle' => 'required',
             'complaintDescription' => 'required',
             'complaintCategory' => 'required',
-            'complaintEvidence' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
+            'complaintEvidence' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $priorityService = new PriorityService();
